@@ -229,15 +229,16 @@ app.post("/submit-request", async (req, res) => {
 // START SERVER
 // =========================
 
-const server = app.listen(3001, () => {
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
   console.log("");
   console.log("====================================");
   console.log("💗 AURA AI SERVER IS RUNNING");
-  console.log("🌐 http://localhost:3001");
+  console.log(`🌐 Server running on port ${PORT}`);
   console.log("====================================");
   console.log("DO NOT CLOSE THIS TERMINAL.");
 });
-
 server.on("error", (error) => {
   console.error("SERVER ERROR:", error);
 });
