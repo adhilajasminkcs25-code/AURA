@@ -90,7 +90,7 @@ function App() {
     }
 
     try {
-      const response = await fetch("http://localhost:3001/chat", {
+      const response = await fetch("https://aura-1-ze7x.onrender.com", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
