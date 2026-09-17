@@ -239,18 +239,3 @@ app.listen(PORT, () => {
   console.log("====================================");
   console.log("DO NOT CLOSE THIS TERMINAL.");
 });
-server.on("error", (error) => {
-  console.error("SERVER ERROR:", error);
-});
-
-server.on("close", () => {
-  console.log("⚠️ AURA server was closed.");
-});
-
-process.on("uncaughtException", (error) => {
-  console.error("UNCAUGHT ERROR:", error);
-});
-
-process.on("unhandledRejection", (error) => {
-  console.error("UNHANDLED ERROR:", error);
-});
