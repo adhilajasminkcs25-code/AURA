@@ -89,17 +89,16 @@ function App() {
       }));
     }
 
-    try {
-      const response = await fetch("https://aura-1-ze7x.onrender.com", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          messages: updatedMessages,
-        }),
-      });
-
+   try {
+  const response = await fetch("https://aura-1-zq7x.onrender.com/chat", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      messages: updatedMessages,
+    }),
+  });
       if (!response.ok) {
         throw new Error("Server error");
       }
