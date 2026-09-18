@@ -40,27 +40,27 @@ function App() {
   const [storyIndex, setStoryIndex] = useState(0);
 
   const stories = [
-  {
-    image: story1,
-    text: "Every hero begins with a reason to care.\nAURA was born from a simple wish: no girl should feel alone.",
-  },
-  {
-    image: story2,
-    text: "She learned that questions about the body can feel confusing and difficult to ask.\nSo she became a guide who listens without judgment.",
-  },
-  {
-    image: story3,
-    text: "From periods and emotions to everyday wellbeing, AURA is there to explain and support.\nHer greatest power is turning uncertainty into understanding.",
-  },
-  {
-    image: story4,
-    text: "But AURA knows that asking for help is also a kind of strength.\nShe reminds every girl that her voice, feelings, and questions matter.",
-  },
-  {
-    image: story5,
-    text: "Now AURA stands beside every girl who needs someone to listen.\nBecause understanding yourself is the beginning of discovering your own power.",
-  },
-];
+    {
+      image: story1,
+      text: "Every hero begins with a reason to care.\nAURA was born from a simple wish: no girl should feel alone.",
+    },
+    {
+      image: story2,
+      text: "She learned that questions about the body can feel confusing and difficult to ask.\nSo she became a guide who listens without judgment.",
+    },
+    {
+      image: story3,
+      text: "From periods and emotions to everyday wellbeing, AURA is there to explain and support.\nHer greatest power is turning uncertainty into understanding.",
+    },
+    {
+      image: story4,
+      text: "But AURA knows that asking for help is also a kind of strength.\nShe reminds every girl that her voice, feelings, and questions matter.",
+    },
+    {
+      image: story5,
+      text: "Now AURA stands beside every girl who needs someone to listen.\nBecause understanding yourself is the beginning of discovering your own power.",
+    },
+  ];
 
   // =========================
   // CHAT WITH AURA
@@ -89,16 +89,20 @@ function App() {
       }));
     }
 
-   try {
-  const response = await fetch("https://aura-1-zq7x.onrender.com/chat", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      messages: updatedMessages,
-    }),
-  });
+    try {
+      const response = await fetch(
+        "https://aura-1-ze7x.onrender.com/chat",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            messages: updatedMessages,
+          }),
+        }
+      );
+
       if (!response.ok) {
         throw new Error("Server error");
       }
@@ -138,7 +142,9 @@ function App() {
       !userDetails.email ||
       !userDetails.location
     ) {
-      setSubmitMessage("Please fill in all the details before submitting. 💗");
+      setSubmitMessage(
+        "Please fill in all the details before submitting. 💗"
+      );
       return;
     }
 
@@ -147,7 +153,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://localhost:3001/submit-request",
+        "https://aura-1-ze7x.onrender.com/submit-request",
         {
           method: "POST",
           headers: {
@@ -172,7 +178,7 @@ function App() {
       console.error("Submit error:", error);
 
       setSubmitMessage(
-        "I couldn't submit your request. Please make sure the AURA server is running and try again. 💗"
+        "I couldn't submit your request right now. Please try again in a moment. 💗"
       );
     } finally {
       setSubmitting(false);
@@ -205,13 +211,11 @@ function App() {
         {/* NAVBAR */}
 
         <nav className="navbar">
-
           <div className="logo">
             AURA
           </div>
 
           <div className="nav-links">
-
             <button onClick={() => setStoryOpen(true)}>
               Her Story
             </button>
@@ -219,9 +223,7 @@ function App() {
             <button onClick={() => setChatOpen(true)}>
               Talk to AURA
             </button>
-
           </div>
-
         </nav>
 
         {/* HERO */}
@@ -280,13 +282,11 @@ function App() {
               <span>✦</span>
 
               <div>
-
                 <strong>AURA</strong>
 
                 <small>
                   Your body. Your story. Your strength.
                 </small>
-
               </div>
 
             </div>
@@ -325,7 +325,6 @@ function App() {
               </div>
 
               <div>
-
                 <h2>
                   Talk to AURA
                 </h2>
@@ -333,7 +332,6 @@ function App() {
                 <p>
                   Your guide. Your listener.
                 </p>
-
               </div>
 
             </div>
@@ -365,11 +363,9 @@ function App() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => {
-
                   if (e.key === "Enter") {
                     sendMessage();
                   }
-
                 }}
               />
 
@@ -567,9 +563,10 @@ function App() {
             <h2>
               Everyone has a beginning.
             </h2>
+
             <p className="story-text">
-  {stories[storyIndex].text}
-</p>
+              {stories[storyIndex].text}
+            </p>
 
             <img
               src={stories[storyIndex].image}
