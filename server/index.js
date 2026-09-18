@@ -1,10 +1,16 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import { GoogleGenAI } from "@google/genai";
 
 dotenv.config();
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+console.log(
+  "Resend API key loaded:",
+  !!process.env.RESEND_API_KEY
+);
 
 const app = express();
 
@@ -18,7 +24,23 @@ app.use(express.json());
 const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
 });
-console.log("Gemini API key loaded:", !!process.env.GEMINI_API_KEY);
+
+console.log(
+  "Gemini API key loaded:",
+  !!process.env.GEMINI_API_KEY
+);
+
+// =========================
+// RESEND
+// =========================
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+console.log(
+  "Resend API key loaded:",
+  !!process.env.RESEND_API_KEY
+);
+
 // =========================
 // TEST SERVER
 // =========================
@@ -92,28 +114,6 @@ Respond naturally to the visitor's latest message.
 });
 
 // =========================
-// EMAIL
-// =========================
-
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-
-  tls: {
-    rejectUnauthorized: false,
-  },
-
-  connectionTimeout: 30000,
-  greetingTimeout: 30000,
-  socketTimeout: 30000,
-});
-// =========================
 // SUBMIT REQUEST
 // =========================
 
@@ -138,9 +138,9 @@ app.post("/submit-request", async (req, res) => {
       timeStyle: "short",
     });
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER,
+    const { data, error } = await resend.emails.send({
+      from: "AURA <onboarding@resend.dev>",
+      to: [process.env.EMAIL_USER],
 
       subject: "🦸 Someone Needs Your Help!",
 
@@ -214,7 +214,16 @@ app.post("/submit-request", async (req, res) => {
       `,
     });
 
+    if (error) {
+      console.error("Resend error:", error);
+
+      return res.status(500).json({
+        error: "Failed to send email.",
+      });
+    }
+
     console.log("Email sent successfully 💗");
+    console.log("Resend ID:", data?.id);
 
     res.json({
       success: true,
