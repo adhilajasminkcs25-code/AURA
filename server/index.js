@@ -5,12 +5,6 @@ import { Resend } from "resend";
 import { GoogleGenAI } from "@google/genai";
 
 dotenv.config();
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-console.log(
-  "Resend API key loaded:",
-  !!process.env.RESEND_API_KEY
-);
 
 const app = express();
 
